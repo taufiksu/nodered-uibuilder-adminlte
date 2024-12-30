@@ -1,23 +1,25 @@
-/** The simplest use of uibuilder client library
- * See the docs if the client doesn't start on its own.
- */
-
-// Listen for incoming messages from Node-RED and action
-// uibuilder.onChange('msg', (msg) => {
-//     // do stuff with the incoming msg
-// })
+var app_socket;
 
 $(document).ready(function () {
     uibuilder.start();
 
     uibuilder.send({
-        "topic": "helloworld",
-        _socketId: app_socket
+        "topic": "get_socket_id",
+        "payload": "get socket id"
     });
 
     uibuilder.onChange('msgsReceived', function (newVal) {
+        if (msg.topic === "get_socket_id") {
+            app_socket = msg._socketId;
+        }
+
         if (msg.topic === "helloworld") {
             alert('Hello World from Node-RED!');
         }
+    });
+
+    uibuilder.send({
+        "topic": "helloworld",
+        _socketId: app_socket
     });
 });
