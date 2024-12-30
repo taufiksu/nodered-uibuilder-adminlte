@@ -6,3 +6,18 @@
 // uibuilder.onChange('msg', (msg) => {
 //     // do stuff with the incoming msg
 // })
+
+$(document).ready(function () {
+    uibuilder.start();
+
+    uibuilder.send({
+        "topic": "helloworld",
+        _socketId: app_socket
+    });
+
+    uibuilder.onChange('msgsReceived', function (newVal) {
+        if (msg.topic === "helloworld") {
+            alert('Hello World from Node-RED!');
+        }
+    });
+});
