@@ -8,7 +8,12 @@ $(document).ready(function () {
         "payload": "get socket id"
     });
 
-    uibuilder.onChange('msgsReceived', function (newVal) {
+    uibuilder.send({
+        "topic": "helloworld",
+        _socketId: app_socket
+    });
+
+    uibuilder.onChange('msg', function (msg) {
         if (msg.topic === "get_socket_id") {
             app_socket = msg._socketId;
         }
@@ -16,10 +21,5 @@ $(document).ready(function () {
         if (msg.topic === "helloworld") {
             alert('Hello World from Node-RED!');
         }
-    });
-
-    uibuilder.send({
-        "topic": "helloworld",
-        _socketId: app_socket
     });
 });
